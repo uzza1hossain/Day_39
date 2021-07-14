@@ -1,10 +1,11 @@
 # Day 39 starting
 from data_manager import DataManager
 from flight_search import FlightSearch
-from flight_data import FlightData
+from notification_manager import NotificationManager
 import datetime
 
-#flight_data = FlightData()
+# flight_data = FlightData()
+notification_manager = NotificationManager()
 flight_search = FlightSearch()
 data_manager = DataManager()
 sheet_data = data_manager.get_destination_data()
@@ -27,10 +28,13 @@ for destination in sheet_data:
         to_time=six_months,
     )
 
-    if destination["lowestPrice"] < flight.price:
-        print("Price is less than old price")
-    else:
-        print("price is more than old price")
+    try:
+        if destination["lowestPrice"] < flight.price:
+            message = f"Low price alert! Only {flight.price} fly from {flight.origin_city}-{flight.origin_airport} to {flight.destination_city}-{flight.destination_airport}, from {flight.out_date} to {flight.return_date}"
+            notification_manager.send_notifications(message)
+    except AttributeError:
+        pass
+
 
 
 
