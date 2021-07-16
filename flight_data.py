@@ -1,4 +1,5 @@
 class FlightData:
+    """"This class will hold all kind flight data temporarily"""
     def __init__(self, price, origin_city, origin_airport, destination_city, destination_airport, out_date,
                  return_date, stop_overs=0, via_city=""):
         self.price = price

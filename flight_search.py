@@ -7,13 +7,13 @@ TEQUILA_API_KEY = os.environ["TEQUILA_API_KEY"]
 
 
 class FlightSearch:
+    """"This Class will communicate with TEQUILA API for any kind of query."""
 
     def get_destination_code(self, city_name):
+        """"This method will get IATA code for given city name"""
+
         location_endpoint = f"{TEQUILA_ENDPOINT}/locations/query"
-        search_params = {
-            "term": city_name,
-            "location_types": "city"
-        }
+        search_params = {"term": city_name, "location_types": "city"}
         search_headers = {"apikey": TEQUILA_API_KEY}
         response = requests.get(url=location_endpoint, params=search_params,
                                 headers=search_headers)
@@ -21,6 +21,8 @@ class FlightSearch:
         return code
 
     def check_flights(self, origin_city_code, destination_city_code, from_time, to_time):
+        """"This method will search available flight for given data."""
+
         search_endpoint = f"{TEQUILA_ENDPOINT}/v2/search"
         search_headers = {"apikey": TEQUILA_API_KEY}
         search_params = {
@@ -60,7 +62,6 @@ class FlightSearch:
 
             except IndexError:
                 return None
-
         else:
             flight_data = FlightData(
                 price=data["price"],
@@ -70,7 +71,6 @@ class FlightSearch:
                 destination_airport=data["route"][0]["flyTo"],
                 out_date=data["route"][0]["local_departure"].split("T")[0],
                 return_date=data["route"][1]["local_departure"].split("T")[0]
-
 
             )
             return flight_data

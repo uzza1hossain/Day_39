@@ -11,11 +11,14 @@ FROM_NUMBER = os.environ["FROM_NUMBER"]
 
 
 class NotificationManager:
+    """"This class will handle all kind of notification sending task"""
 
     def __init__(self):
         self.client = Client(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
 
     def send_sms(self, msg, link):
+        """"This method will send email"""
+
         sms_text = f"{msg}\n{link}"
         message = self.client.messages \
             .create(
@@ -24,9 +27,8 @@ class NotificationManager:
             to='+12025550167'
         )
 
-        print(message.sid)
-
     def send_email(self, to_adds_list, msg, link):
+        """"This method will send email to given list of email."""
         with smtplib.SMTP(MY_SMTP_SERVER) as server:
             server.starttls()
             server.login(user=MY_EMAIL, password=MY_PASSWORD)
