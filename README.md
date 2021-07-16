@@ -1,2 +1,2 @@
 # day_39
-Cheap Flight Deal Finder
+Cheap Flight Deal Notifier
